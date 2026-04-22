@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tantra Meditation | Awaken Your Inner Peace</title>
+    
+    <!-- Google Fonts for Elegant Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS Integration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f6f4',
+                            100: '#e4ebe4',
+                            200: '#cddbcc',
+                            300: '#aabdaa',
+                            400: '#829a82',
+                            500: '#627d62',
+                            600: '#4b634b',
+                            700: '#3d4f3d',
+                            800: '#324032',
+                            900: '#2a352a',
+                        },
+                        gold: {
+                            400: '#dfc26a',
+                            500: '#d4af37',
+                            600: '#b5952f',
+                        },
+                        dark: '#1a1f1a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f6f4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #829a82;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #627d62;
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Subtle Hero Gradient Background */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(42, 53, 42, 0.9) 0%, rgba(61, 79, 61, 0.9) 100%), 
+                        url('https://images.unsplash.com/photo-1528315651484-4dba2f6027a7?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* NEW INTERACTIVE STYLES */
+        @media (pointer: fine) {
+            body, a, button { cursor: none; }
+        }
+        #cursor, #cursor-trail {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            transition: transform 0.15s ease-out;
+        }
+        #cursor {
+            width: 8px; height: 8px;
+            background-color: #d4af37;
+        }
+        #cursor-trail {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            transition: width 0.2s, height 0.2s, top 0.1s, left 0.1s, background-color 0.2s;
+        }
+        .hover-active #cursor-trail {
+            width: 60px; height: 60px;
+            background-color: rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float-orb 10s infinite ease-in-out alternate;
+            z-index: 0;
+        }
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -40px) scale(1.1); }
+        }
+        
+        /* 3D Tilt Card */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+        }
+        .tilt-content {
+            transform: translateZ(30px);
+            transition: transform 0.3s;
+        }
+        .tilt-card:hover .tilt-content {
+            transform: translateZ(40px);
+        }
+    </style>
+</head>
+<body class="bg-sage-50 text-dark font-sans antialiased overflow-x-hidden">
+
+    <!-- Custom Cursor -->
+    <div id="cursor" class="hidden md:block"></div>
+    <div id="cursor-trail" class="hidden md:block"></div>
+
+    <!-- Interactive Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+        <div class="absolute inset-0 bg-sage-900/60 backdrop-blur-md" onclick="closeModal()"></div>
+        <div class="relative bg-white/95 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 max-w-lg w-full mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-sage-400 hover:text-sage-900 text-2xl custom-hover transition-transform hover:rotate-90">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div class="text-center mb-8">
+                <div class="inline-block p-4 rounded-full bg-sage-50 mb-4 animate-pulse">
+                    <i class="fa-solid fa-lotus text-4xl text-gold-500"></i>
+                </div>
+                <h3 class="text-3xl font-serif font-bold text-sage-900 mb-2">Begin Your Journey</h3>
+                <p class="text-sage-600">Connect directly to schedule your sacred session.</p>
+            </div>
+            <div class="space-y-4">
+                <a href="mailto:er.yash.pokhriyal@gmail.com" class="w-full flex items-center justify-start gap-6 bg-white border border-sage-100 text-sage-900 p-5 rounded-2xl hover:bg-sage-50 hover:border-gold-300 hover:shadow-lg transition-all custom-hover group">
+                    <div class="w-12 h-12 rounded-full bg-sage-100 flex items-center justify-center group-hover:bg-gold-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-envelope text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-xs uppercase tracking-wider text-sage-500 font-semibold mb-1">Email Us</div>
+                        <div class="font-medium">er.yash.pokhriyal@gmail.com</div>
+                    </div>
+                </a>
+                <a href="tel:+918826244824" class="w-full flex items-center justify-start gap-6 bg-white border border-sage-100 text-sage-900 p-5 rounded-2xl hover:bg-sage-50 hover:border-gold-300 hover:shadow-lg transition-all custom-hover group">
+                    <div class="w-12 h-12 rounded-full bg-sage-100 flex items-center justify-center group-hover:bg-gold-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid fa-phone text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-xs uppercase tracking-wider text-sage-500 font-semibold mb-1">Call / WhatsApp</div>
+                        <div class="font-medium">+91 88262 44824</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif font-bold text-white tracking-wide flex items-center gap-2 custom-hover">
+                <i class="fa-solid fa-lotus text-gold-500"></i>
+                Tantra<span class="font-light">Meditation</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8 text-white/90 font-medium">
+                <a href="#about" class="hover:text-gold-400 transition-colors custom-hover">Philosophy</a>
+                <a href="#practices" class="hover:text-gold-400 transition-colors custom-hover">Practices</a>
+                <a href="#reviews" class="hover:text-gold-400 transition-colors custom-hover">Reviews</a>
+                <button onclick="openModal()" class="bg-gold-500 text-dark px-6 py-2 rounded-full hover:bg-gold-400 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 custom-hover">Start Journey</button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none custom-hover">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-sage-900 shadow-xl flex-col items-center py-6 space-y-4 md:hidden border-t border-sage-800">
+            <a href="#about" class="text-white hover:text-gold-400 text-lg transition-colors mobile-link">Philosophy</a>
+            <a href="#practices" class="text-white hover:text-gold-400 text-lg transition-colors mobile-link">Practices</a>
+            <a href="#reviews" class="text-white hover:text-gold-400 text-lg transition-colors mobile-link">Reviews</a>
+            <button onclick="openModal(); document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('mobile-menu').classList.remove('flex');" class="bg-gold-500 text-dark px-8 py-3 rounded-full font-medium hover:bg-gold-400 transition-colors mt-2">Start Journey</button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+        <!-- Interactive Animated Orbs -->
+        <div class="orb bg-gold-500/20 w-96 h-96 top-20 left-10"></div>
+        <div class="orb bg-sage-300/20 w-72 h-72 bottom-10 right-20" style="animation-delay: -5s; animation-duration: 12s;"></div>
+        <div class="orb bg-white/10 w-64 h-64 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation-delay: -2s; animation-duration: 8s;"></div>
+
+        <!-- Decorative Overlay Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sage-900/40"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+            <span class="text-gold-400 tracking-widest uppercase text-sm font-semibold mb-4 block animate-pulse">Awaken Your Inner Energy</span>
+            <h1 class="text-5xl md:text-7xl font-serif text-white font-bold mb-6 leading-tight drop-shadow-lg">
+                Discover Profound <br> <span class="italic font-light text-sage-200">Peace & Connection</span>
+            </h1>
+            <p class="text-lg md:text-xl text-sage-100 mb-10 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
+                Tantra meditation is a pathway to reconnect with yourself on a profound level, weaving together mindfulness, breathwork, and spiritual essence to expand your consciousness.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openModal()" class="w-full sm:w-auto bg-sage-50 text-sage-900 px-8 py-4 rounded-full font-medium hover:bg-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] text-center custom-hover transform hover:scale-105">
+                    Start Your Journey
+                </button>
+                <a href="#reviews" class="w-full sm:w-auto border border-sage-200 text-white px-8 py-4 rounded-full font-medium hover:bg-sage-800 hover:border-sage-800 transition-all text-center flex items-center justify-center gap-2 custom-hover transform hover:scale-105 backdrop-blur-sm">
+                    <i class="fa-regular fa-star text-gold-400"></i> Read Reviews
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-white/70 hover:text-white text-2xl">
+                <i class="fa-solid fa-angle-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-sage-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Image side -->
+                <div class="lg:w-1/2 reveal">
+                    <div class="relative">
+                        <div class="absolute -inset-4 border-2 border-gold-500/30 rounded-2xl transform translate-x-4 translate-y-4"></div>
+                        <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1000&auto=format&fit=crop" alt="Meditation Space" class="rounded-2xl shadow-2xl relative z-10 w-full object-cover h-[500px]">
+                    </div>
+                </div>
+                
+                <!-- Text side -->
+                <div class="lg:w-1/2 reveal delay-100">
+                    <h2 class="text-sm font-bold text-sage-600 uppercase tracking-widest mb-2">Our Philosophy</h2>
+                    <h3 class="text-4xl md:text-5xl font-serif font-bold text-sage-900 mb-6">The Path to Wholeness</h3>
+                    <p class="text-sage-700 mb-6 text-lg leading-relaxed">
+                        The word "Tantra" signifies the intertwining of the physical and spiritual realms. Unlike traditional practices that aim for detachment, Tantra embraces the present moment, treating the body as a sacred vessel for divine energy.
+                    </p>
+                    <p class="text-sage-700 mb-8 text-lg leading-relaxed">
+                        Through our guided sessions, we emphasize the integration of polarities, heart-centeredness, and breath awareness to release emotional blockages and cultivate unconditional love for oneself and the universe.
+                    </p>
+                    
+                    <ul class="space-y-4 text-sage-800 font-medium">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-500 text-xl"></i> Balance mind, body, and spirit.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-500 text-xl"></i> Awaken and elevate natural energy.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check text-gold-500 text-xl"></i> Foster deep inner healing and presence.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="practices" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 text-center reveal">
+            <h2 class="text-sm font-bold text-sage-600 uppercase tracking-widest mb-2">Techniques</h2>
+            <h3 class="text-4xl md:text-5xl font-serif font-bold text-sage-900 mb-16">Sacred Practices</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Practice 1 -->
+                <div class="tilt-card p-8 rounded-3xl bg-white border border-sage-100 hover:shadow-2xl transition-all duration-300 reveal delay-100 group">
+                    <div class="tilt-content">
+                        <div class="w-16 h-16 mx-auto bg-sage-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold-500 group-hover:text-white group-hover:rotate-12 transition-all duration-300 text-sage-700 text-2xl shadow-sm">
+                            <i class="fa-solid fa-wind"></i>
+                        </div>
+                        <h4 class="text-2xl font-serif font-bold text-sage-900 mb-4 group-hover:text-gold-600 transition-colors">Conscious Breathwork</h4>
+                        <p class="text-sage-600 leading-relaxed">
+                            Pranayama acts as a bridge between body and mind. Deep, mindful breathing calms the nervous system and opens up vital energy channels.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Practice 2 -->
+                <div class="tilt-card p-8 rounded-3xl bg-white border border-sage-100 hover:shadow-2xl transition-all duration-300 reveal delay-200 group">
+                    <div class="tilt-content">
+                        <div class="w-16 h-16 mx-auto bg-sage-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold-500 group-hover:text-white group-hover:rotate-12 transition-all duration-300 text-sage-700 text-2xl shadow-sm">
+                            <i class="fa-solid fa-sun"></i>
+                        </div>
+                        <h4 class="text-2xl font-serif font-bold text-sage-900 mb-4 group-hover:text-gold-600 transition-colors">Chakra Balancing</h4>
+                        <p class="text-sage-600 leading-relaxed">
+                            Working with the body's subtle energy centers through visualization and meditation to promote harmony and spiritual awakening.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Practice 3 -->
+                <div class="tilt-card p-8 rounded-3xl bg-white border border-sage-100 hover:shadow-2xl transition-all duration-300 reveal delay-300 group">
+                    <div class="tilt-content">
+                        <div class="w-16 h-16 mx-auto bg-sage-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-gold-500 group-hover:text-white group-hover:rotate-12 transition-all duration-300 text-sage-700 text-2xl shadow-sm">
+                            <i class="fa-solid fa-om"></i>
+                        </div>
+                        <h4 class="text-2xl font-serif font-bold text-sage-900 mb-4 group-hover:text-gold-600 transition-colors">Mantra & Sound</h4>
+                        <p class="text-sage-600 leading-relaxed">
+                            The repetition of sacred sounds and mantras helps quiet the monkey mind, reducing stress through vibrational healing and deep focus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="py-24 bg-sage-900 text-sage-50 relative overflow-hidden">
+        <!-- Decorative abstract shape -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-sage-600/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <i class="fa-solid fa-quote-left text-4xl text-gold-500 mb-6 opacity-50"></i>
+                <h2 class="text-sm font-bold text-gold-400 uppercase tracking-widest mb-2">Community Experiences</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Words from Our Seekers</h3>
+                <p class="text-sage-200 max-w-2xl mx-auto text-lg">
+                    Discover how Tantra meditation has transformed the lives of our community members, bringing them peace, balance, and profound spiritual healing.
+                </p>
+            </div>
+
+            <!-- Testimonial Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- Review Card 1: Tamanna -->
+                <div class="bg-sage-800/50 backdrop-blur p-8 rounded-2xl border border-sage-700 reveal delay-100">
+                    <div class="flex text-gold-400 text-sm mb-4 gap-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sage-100 italic mb-6">"Tantra meditation has been a true blessing. The practices and breathing techniques significantly helped relieve the pain from my PCOS. I feel more in tune with my body's natural rhythms than ever before."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-sage-600 flex items-center justify-center text-white font-bold text-lg">T</div>
+                        <div>
+                            <h5 class="font-bold text-white text-lg">Tamanna</h5>
+                            <span class="text-sage-400 text-sm">Meditation Client</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 2: Mansi -->
+                <div class="bg-sage-800/50 backdrop-blur p-8 rounded-2xl border border-sage-700 reveal delay-200">
+                    <div class="flex text-gold-400 text-sm mb-4 gap-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sage-100 italic mb-6">"Before starting these sessions, I struggled heavily with insomnia and was simply unable to sleep. The deep relaxation and energy balancing techniques have completely cured my sleep issues. I now rest deeply."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-sage-600 flex items-center justify-center text-white font-bold text-lg">M</div>
+                        <div>
+                            <h5 class="font-bold text-white text-lg">Mansi</h5>
+                            <span class="text-sage-400 text-sm">Meditation Client</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 3: Mayank -->
+                <div class="bg-sage-800/50 backdrop-blur p-8 rounded-2xl border border-sage-700 reveal delay-300">
+                    <div class="flex text-gold-400 text-sm mb-4 gap-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sage-100 italic mb-6">"In the chaos of daily life, this practice has been my anchor. The guided meditation sessions have profoundly helped in calming my racing mind. I finally experience true mental clarity and inner peace."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-sage-600 flex items-center justify-center text-white font-bold text-lg">MB</div>
+                        <div>
+                            <h5 class="font-bold text-white text-lg">Mayank Bharadwaj</h5>
+                            <span class="text-sage-400 text-sm">Meditation Client</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 4: Rochishna -->
+                <div class="bg-sage-800/50 backdrop-blur p-8 rounded-2xl border border-sage-700 reveal delay-400">
+                    <div class="flex text-gold-400 text-sm mb-4 gap-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sage-100 italic mb-6">"A magical and transformative journey. The safe space created here allowed me to release old emotional blocks, connect with my core energy, and embrace a newfound sense of self-love and joy."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-sage-600 flex items-center justify-center text-white font-bold text-lg">R</div>
+                        <div>
+                            <h5 class="font-bold text-white text-lg">Rochishna</h5>
+                            <span class="text-sage-400 text-sm">Wellness Enthusiast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Drive Link Integration -->
+            <div class="text-center bg-sage-800 p-8 rounded-3xl border border-sage-700 shadow-2xl reveal">
+                <i class="fa-brands fa-google-drive text-4xl text-sage-400 mb-4"></i>
+                <h4 class="text-2xl font-serif text-white font-bold mb-3">Explore Our Complete Gallery & Reviews</h4>
+                <p class="text-sage-200 mb-8 max-w-xl mx-auto">
+                    We maintain an open folder of beautiful moments, retreat images, and unedited handwritten reviews from our beloved community.
+                </p>
+                <a href="https://drive.google.com/drive/folders/1nbQGC0zPmmQpyzs6abRXAQR65uziM1s2?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-gold-500 text-sage-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-400 transition-all shadow-lg hover:-translate-y-1">
+                    <i class="fa-solid fa-folder-open"></i> Access Drive Folder
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-sage-900 text-sage-300 py-16 border-t border-sage-800">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            <!-- Brand -->
+            <div>
+                <a href="#" class="text-2xl font-serif font-bold text-white tracking-wide flex items-center gap-2 mb-6">
+                    <i class="fa-solid fa-lotus text-gold-500"></i>
+                    Tantra<span class="font-light">Meditation</span>
+                </a>
+                <p class="text-sage-400 mb-6 leading-relaxed">
+                    Guiding you on a transformative journey to harmonize mind, body, and spirit through ancient wisdom and sacred practices.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-sage-800 flex items-center justify-center hover:bg-gold-500 hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-sage-800 flex items-center justify-center hover:bg-gold-500 hover:text-white transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-sage-800 flex items-center justify-center hover:bg-gold-500 hover:text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-white font-bold text-lg mb-6">Explore</h4>
+                <ul class="space-y-3">
+                    <li><a href="#home" class="hover:text-gold-400 transition-colors">Home</a></li>
+                    <li><a href="#about" class="hover:text-gold-400 transition-colors">Our Philosophy</a></li>
+                    <li><a href="#practices" class="hover:text-gold-400 transition-colors">Meditation Practices</a></li>
+                    <li><a href="#reviews" class="hover:text-gold-400 transition-colors">Community Reviews</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h4 class="text-white font-bold text-lg mb-6">Begin Your Journey</h4>
+                <p class="text-sage-400 mb-4">Reach out to us to book your sessions, schedule a consultation, or learn more about our upcoming retreats.</p>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3"><a href="mailto:er.yash.pokhriyal@gmail.com" class="hover:text-gold-400 transition-colors"><i class="fa-solid fa-envelope text-gold-500 w-5 text-center"></i> er.yash.pokhriyal@gmail.com</a></li>
+                    <li class="flex items-center gap-3"><a href="tel:+918826244824" class="hover:text-gold-400 transition-colors"><i class="fa-solid fa-phone text-gold-500 w-5 text-center"></i> +91 88262 44824</a></li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-gold-500 w-5 text-center"></i> Global Online & Selected Retreats</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-sage-800 text-center text-sm text-sage-500">
+            &copy; 2026 Tantra Meditation. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const cursorTrail = document.getElementById('cursor-trail');
+        
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    cursorTrail.style.left = e.clientX + 'px';
+                    cursorTrail.style.top = e.clientY + 'px';
+                }, 50);
+            });
+
+            // Hover effects for cursor
+            const hoverElements = document.querySelectorAll('a, button, .custom-hover');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+            });
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('booking-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            requestAnimationFrame(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            });
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // 3D Tilt Effect for Practice Cards
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10; 
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-sage-900', 'shadow-md', 'py-3');
+                navbar.classList.remove('bg-transparent', 'py-4');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-4');
+                navbar.classList.remove('bg-sage-900', 'shadow-md', 'py-3');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            // Toggle icon
+            const icon = mobileBtn.querySelector('i');
+            if(mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                const icon = mobileBtn.querySelector('i');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Reveal Animation Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        
+        window.addEventListener("scroll", reveal);
+        // Trigger once on page load
+        reveal();
+    </script>
+</body>
+</html>
